@@ -26,7 +26,6 @@
             }
 
             .puzzle {
-                  background-color: #FFDC00;
                   width: 100px;
                   height: 100px;
                   /* margin: 0 auto; */
@@ -51,7 +50,7 @@
                   <div class="filler-item"></div>
 
                   <a href="{{  up_link }}">
-                        <div class="puzzle">
+                        <div class="puzzle" style="{{ up_style }}">
                               {% autoescape false %}
                               {{ puzzle_up }}
                               {% endautoescape %}
@@ -61,7 +60,7 @@
                   <div class="filler-item"></div>
 
                   <a href="{{  left_link }}">
-                        <div class="puzzle">
+                        <div class="puzzle" style="{{ left_style }}">
                               {% autoescape false %}
                               {{ puzzle_left }}
                               {% endautoescape %}
@@ -69,7 +68,7 @@
                   </a>
 
                   <a href="{{  middle_link }}">
-                        <div class="puzzle">
+                        <div class="puzzle" style="background-color: #aaa0ff ;">
                               {% autoescape false %}
                               {{ puzzle_middle }}
                               {% endautoescape %}
@@ -77,7 +76,7 @@
                   </a>
 
                   <a href="{{  right_link }}">
-                        <div class="puzzle">
+                        <div class="puzzle" style="{{ right_style }}">
                               {% autoescape false %}
                               {{ puzzle_right }}
                               {% endautoescape %}
@@ -87,7 +86,7 @@
                   <div class="filler-item"></div>
 
                   <a href="{{  down_link }}">
-                        <div class="puzzle">
+                        <div class="puzzle" style="{{ down_style }}">
                               {% autoescape false %}
                               {{ puzzle_down }}
                               {% endautoescape %}
