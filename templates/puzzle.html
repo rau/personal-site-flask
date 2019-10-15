@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <meta charset="UTF-8">
+      <title>Sliding Puzzles Visualization</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+      <style>
+            body {
+                  font-family: monospace;
+                  font-size: 20px;
+                  background-color: #f5f5dc;
+                  margin: 40px;
+            }
+
+            .center-container {
+                  text-align: center;
+            }
+
+            .grid-container {
+                  display: inline-grid;
+                  grid-template-columns: auto auto auto;
+                  grid-gap: 10px;
+                  /* align-items: center;
+                  justify-items: center; */
+            }
+
+            .puzzle {
+                  background-color: #FFDC00;
+                  width: 100px;
+                  height: 100px;
+                  /* margin: 0 auto; */
+                  text-align: center;
+                  /* vertical-align: middle; */
+            }
+
+            a {
+                  color: inherit;
+                  text-decoration: inherit;
+            }
+      </style>
+</head>
+
+<body>
+      <h1 style="text-align: center">An A* Visualization</h1>
+      <br></br>
+      <br></br>
+
+      <div class="center-container">
+            <div class="grid-container">
+                  <div class="filler-item"></div>
+
+                  <a href="{{  up_link }}">
+                        <div class="puzzle">
+                              {% autoescape false %}
+                              {{ puzzle_up }}
+                              {% endautoescape %}
+                        </div>
+                  </a>
+
+                  <div class="filler-item"></div>
+
+                  <a href="{{  left_link }}">
+                        <div class="puzzle">
+                              {% autoescape false %}
+                              {{ puzzle_left }}
+                              {% endautoescape %}
+                        </div>
+                  </a>
+
+                  <a href="{{  middle_link }}">
+                        <div class="puzzle">
+                              {% autoescape false %}
+                              {{ puzzle_middle }}
+                              {% endautoescape %}
+                        </div>
+                  </a>
+
+                  <a href="{{  right_link }}">
+                        <div class="puzzle">
+                              {% autoescape false %}
+                              {{ puzzle_right }}
+                              {% endautoescape %}
+                        </div>
+                  </a>
+
+                  <div class="filler-item"></div>
+
+                  <a href="{{  down_link }}">
+                        <div class="puzzle">
+                              {% autoescape false %}
+                              {{ puzzle_down }}
+                              {% endautoescape %}
+                        </div>
+                  </a>
+
+
+                  <div class="filler-item"></div>
+
+            </div>
+      </div>
+</body>
+
+</html>
