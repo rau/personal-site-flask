@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <meta charset="UTF-8">
+      <title>Sliding Puzzles Visualization</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+      <style>
+            body {
+                  font-family: monospace;
+                  font-size: 20px;
+                  background-color: #f5f5dc;
+                  margin: 40px;
+            }
+
+            a {
+                  color: inherit;
+                  text-decoration: inherit;
+            }
+      </style>
+</head>
+
+<body>
+      <h1 style="text-align: center">An A* Visualization</h1>
+      <br></br>
+      <br></br>
+
+      <form method="POST">
+            <p><input type='text' name='puzzle' id='puzzle'></p>
+            <p><input type='submit' value='Visualize'> </p>
+      </form>
+
+</body>
+
+</html>

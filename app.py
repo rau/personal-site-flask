@@ -1,30 +1,75 @@
 from flask import Flask, render_template, request, redirect, session
-from flask import send_file, make_response, send_from_directory
-from functions import get_children, bfs_shortest_path, get_children_app, a_star_heuristic
+from flask import send_file, make_response, send_from_directory, flash
+from werkzeug.utils import secure_filename
+from puzzle_functions import get_children, bfs_shortest_path, get_children_app, a_star_heuristic
+from upload_functions import allowed_file
+from keys import SECRET_KEY
 from textwrap import wrap
 import os
-import time
 
 # Sets CWD to whatever directory app.py is located in
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-# Initialize flask app, SECRET_KEY can be found in keys.py
 app = Flask(__name__, template_folder="templates")
 app.root_path = os.path.dirname(os.path.abspath(__file__))
+app.secret_key=SECRET_KEY
 
+UPLOAD_PATH = 'static/uploads/'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'PNG', 'JPG', 'JPEG'])
+app.config['UPLOAD_PATH'] = UPLOAD_PATH
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/eabsentee')
+def eabsentee():
+    return render_template('eabsentee.html')
+
+@app.route('/ion')
+def ion():
+    return render_template('ion.html')
+
+
+# Upload
+@app.route('/upload', methods=['GET', 'POST'])
+def image_upload():
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            print('Not in')
+            flash('No file uploaded')
+            return redirect(request.url)
+        file = request.files['image']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            print(os.path.join(app.config['UPLOAD_PATH'], filename))
+            file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+            return redirect(f"/image/{filename}")
+    if request.method == 'GET':
+        return render_template('upload.html')
+
+@app.route('/image/<path>')
+def image_host(path):
+    return send_from_directory(app.config['UPLOAD_PATH'], path, as_attachment=False)
+
+
+# Puzzles
 
 global path
 path = []
-'''Static Routes'''
-# Homepage
-@app.route('/', methods=['GET', 'POST'])
-def home():
+
+@app.route('/slidingpuzzles', methods=['GET', 'POST'])
+def puzzles():
     if request.method == 'POST':
         global path
         path = bfs_shortest_path(request.form['puzzle'], '3')
         return redirect((request.url + 'puzzle/' + request.form['puzzle']))
     if request.method == 'GET':
-        return render_template('index.html')
+        return render_template('puzzle_home.html')
 
 
 @app.route('/puzzle/<puzzle>', methods=['GET', 'POST'])
@@ -87,4 +132,4 @@ def display_new_puzzle(puzzle):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
